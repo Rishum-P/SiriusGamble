@@ -1,0 +1,9 @@
+name: SiriusGambling
+main: sirius.gambling.SiriusGambling
+version: 1.0
+depend: [Vault]
+authors: [Emuq, Rishum]
+commands:
+  gamble:
+    description: Gamble your moneys!.
+    usage: /<command> (bet)
