@@ -12,15 +12,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+
 public class Slots
 {
   Player player;
   double bet = 0.0D;
   
   public static Inventory inv;
-  
+
   ItemStack purple = new ItemStack(160);
-  
+
   ItemStack blue = new ItemStack(160);
   
   ItemStack yellow = new ItemStack(160);
@@ -113,8 +114,7 @@ public class Slots
       i3.setItemMeta(iM);
       this.player.sendMessage(ChatColor.GREEN + "You won! " + (this.bet * 3.0D) + " added to your balance!");
       SiriusGambling.econ.depositPlayer((OfflinePlayer)this.player, this.bet * 3.0D);
-      Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + this.player
-          .getPlayerListName() + " just bet " + this.bet + " and won " + (this.bet * 3.0D) + "!");
+      Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + this.player.getPlayerListName() + " just bet " + this.bet + " and won " + (this.bet * 3.0D) + "!");
     } else if (ni1 == ni2 || ni2 == ni3 || ni1 == ni3) {
       ItemMeta iM = i1.getItemMeta();
       iM.setDisplayName(ChatColor.YELLOW + "YOU WON");
@@ -123,16 +123,14 @@ public class Slots
       i3.setItemMeta(iM);
       this.player.sendMessage(ChatColor.GREEN + "You won! " + (this.bet * 2.0D) + " added to your balance!");
       SiriusGambling.econ.depositPlayer((OfflinePlayer)this.player, this.bet * 2.0D);
-      Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + this.player
-          .getPlayerListName() + " just bet " + this.bet + " and won " + (this.bet * 2.0D) + "!");
+      Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + this.player.getPlayerListName() + " just bet " + this.bet + " and won " + (this.bet * 2.0D) + "!");
     } else {
       ItemMeta iM = i1.getItemMeta();
       iM.setDisplayName(ChatColor.GRAY + "BAD LUCK");
       i1.setItemMeta(iM);
       i2.setItemMeta(iM);
       i3.setItemMeta(iM);
-      Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.RED + this.player
-          .getPlayerListName() + " just bet " + this.bet + " and lost it all!");
+      Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.RED + this.player.getPlayerListName() + " just bet " + this.bet + " and lost it all!");
    }
 }
  }

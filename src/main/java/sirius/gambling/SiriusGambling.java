@@ -45,6 +45,7 @@ public class SiriusGambling extends JavaPlugin {
                 return;
             }
         }
+
     }
 
     public void onDisable() {
