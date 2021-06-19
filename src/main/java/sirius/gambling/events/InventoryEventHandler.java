@@ -1,4 +1,4 @@
-package sirius.gambling;
+package sirius.gambling.events;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

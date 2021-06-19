@@ -33,14 +33,12 @@ public class Slots
   
   ItemStack empty = new ItemStack(Material.THIN_GLASS);
   
-  SiriusGambling plugin;
-  
+
   Random random = new Random(System.currentTimeMillis());
   
-  public Slots(Player player, double bet, SiriusGambling plugin) {
+  public Slots(Player player, double bet) {
     this.player = player;
     this.bet = bet;
-    this.plugin = plugin;
     this.purple.setDurability((short)2);
     this.blue.setDurability((short)3);
     this.yellow.setDurability((short)4);
@@ -71,7 +69,7 @@ public class Slots
           } 
         }
       };
-    rollTask.runTaskTimerAsynchronously((Plugin)this.plugin, 5L, 2L);
+    rollTask.runTaskTimerAsynchronously(SiriusGambling.plugin, 5L, 2L);
   }
   
   public void roll() {
