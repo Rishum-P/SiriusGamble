@@ -5,5 +5,5 @@ depend: [Vault]
 authors: [Emuq, Rishum]
 commands:
   gamble:
-    description: Gamble your moneys!.
+    description: Gamble away your hard earned money!
     usage: /<command> (bet)
