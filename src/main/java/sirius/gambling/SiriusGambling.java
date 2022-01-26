@@ -1,6 +1,5 @@
 package sirius.gambling;
 
-import java.util.logging.Logger;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.plugin.Plugin;
@@ -8,10 +7,10 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import sirius.gambling.commands.CommandRegisterer;
 import sirius.gambling.events.EventRegisterer;
-import sirius.gambling.events.InventoryEventHandler;
+
+import java.util.logging.Logger;
 
 public class SiriusGambling extends JavaPlugin {
-    public SiriusGambling instance = this;
     public static Economy econ = null;
     public static Permission perms = null;
     public static boolean vaultPresent = false;
@@ -34,14 +33,14 @@ public class SiriusGambling extends JavaPlugin {
                 this.log.info("Economy set up.");
             } else {
                 this.log.warning("No economy plugin detected.");
-                getPluginLoader().disablePlugin((Plugin) this);
+                getPluginLoader().disablePlugin(this);
                 return;
             }
             if (setupPermissions()) {
                 this.log.info("Permissions set up.");
             } else {
                 this.log.warning("No permission plugin detected");
-                getPluginLoader().disablePlugin((Plugin) this);
+                getPluginLoader().disablePlugin(this);
                 return;
             }
         }
@@ -58,14 +57,14 @@ public class SiriusGambling extends JavaPlugin {
         if (rsp == null) {
             return false;
         }
-        econ = (Economy) rsp.getProvider();
+        econ = rsp.getProvider();
         return (econ != null);
     }
 
 
     private boolean setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
-        perms = (Permission) rsp.getProvider();
+        perms = rsp.getProvider();
         return (perms != null);
     }
 

@@ -1,5 +1,6 @@
 package sirius.gambling.events;
 
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -11,7 +12,7 @@ public class InventoryEventHandler implements Listener {
   public void onInventoryClickEvent(InventoryClickEvent event) {
     if (event.getWhoClicked() instanceof org.bukkit.entity.Player) {
       Inventory inv = event.getInventory();
-      if (inv.getName().contains("Sirius"))
+      if (inv.contains(Material.valueOf("Sirius")))
         event.setCancelled(true); 
     } 
   }

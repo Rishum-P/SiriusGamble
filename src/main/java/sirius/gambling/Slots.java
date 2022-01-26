@@ -1,6 +1,5 @@
 package sirius.gambling;
 
-import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -9,8 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Random;
 
 
 public class Slots
@@ -20,23 +20,24 @@ public class Slots
   
   public static Inventory inv;
 
-  ItemStack purple = new ItemStack(160);
+  ItemStack purple = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
 
-  ItemStack blue = new ItemStack(160);
+  ItemStack blue = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
   
-  ItemStack yellow = new ItemStack(160);
+  ItemStack yellow = new ItemStack(Material.YELLOW_STAINED_GLASS_PANE);
   
-  ItemStack green = new ItemStack(160);
+  ItemStack green = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
   
-  ItemStack pink = new ItemStack(160);
+  ItemStack pink = new ItemStack(Material.PINK_STAINED_GLASS_PANE);
   
-  ItemStack gray = new ItemStack(160);
+  ItemStack gray = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
   
-  ItemStack empty = new ItemStack(Material.THIN_GLASS);
+  ItemStack empty = new ItemStack(Material.GLASS_PANE);
   
 
   Random random = new Random(System.currentTimeMillis());
-  
+
+  @Deprecated
   public Slots(Player player, double bet) {
     this.player = player;
     this.bet = bet;
@@ -98,8 +99,9 @@ public class Slots
       } 
     } 
   }
-  
-  public void checkWin() {
+
+  @Deprecated
+    public void checkWin() {
     ItemStack i1 = inv.getItem(3);
     ItemStack i2 = inv.getItem(4);
     ItemStack i3 = inv.getItem(5);

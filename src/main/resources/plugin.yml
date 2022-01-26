@@ -1,3 +1,4 @@
+api-version: 1.16
 name: SiriusGambling
 main: sirius.gambling.SiriusGambling
 version: 1.0
