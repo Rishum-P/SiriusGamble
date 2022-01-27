@@ -9,7 +9,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+import sirius.gambling.util.SQLManager;
 
+import java.util.List;
 import java.util.Random;
 
 
@@ -115,8 +117,10 @@ public class Slots
       i2.setItemMeta(iM);
       i3.setItemMeta(iM);
       this.player.sendMessage(ChatColor.GREEN + "You won! " + (this.bet * 3.0D) + " added to your balance!");
-      SiriusGambling.econ.depositPlayer((OfflinePlayer)this.player, this.bet * 3.0D);
+      SiriusGambling.econ.depositPlayer(this.player, this.bet * 3.0D);
       Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + this.player.getPlayerListName() + " just bet " + this.bet + " and won " + (this.bet * 3.0D) + "!");
+      updateStats(this.bet * 3.0D);
+
     } else if (ni1 == ni2 || ni2 == ni3 || ni1 == ni3) {
       ItemMeta iM = i1.getItemMeta();
       iM.setDisplayName(ChatColor.YELLOW + "YOU WON");
@@ -124,8 +128,10 @@ public class Slots
       i2.setItemMeta(iM);
       i3.setItemMeta(iM);
       this.player.sendMessage(ChatColor.GREEN + "You won! " + (this.bet * 2.0D) + " added to your balance!");
-      SiriusGambling.econ.depositPlayer((OfflinePlayer)this.player, this.bet * 2.0D);
+      SiriusGambling.econ.depositPlayer(this.player, this.bet * 2.0D);
       Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + this.player.getPlayerListName() + " just bet " + this.bet + " and won " + (this.bet * 2.0D) + "!");
+      updateStats(this.bet * 2.0D);
+
     } else {
       ItemMeta iM = i1.getItemMeta();
       iM.setDisplayName(ChatColor.GRAY + "BAD LUCK");
@@ -133,7 +139,49 @@ public class Slots
       i2.setItemMeta(iM);
       i3.setItemMeta(iM);
       Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.RED + this.player.getPlayerListName() + " just bet " + this.bet + " and lost it all!");
-   }
+      updateStats(0.0D);
+
+    }
+  }
+
+
+  public void updateStats(double amount_won) {
+
+    int Won = 0;
+    int amount_lost = 0;
+
+    if (amount_won != 0.0D) {
+      Won = 1;
+    }
+
+    if (amount_won == 0.0D) {
+      amount_lost = (int) this.bet;
+    }
+
+
+    if (SiriusGambling.siriusGambling.getSQLManager().PlayerExists(player.getUniqueId().toString())) {
+
+      List<Number> test = SiriusGambling.siriusGambling.getSQLManager().GetData(player.getUniqueId().toString());
+      int Games_Played = (int) test.get(1);
+      int Games_Won = (int) test.get(2);
+      int Amount_Won = (int) test.get(3);
+      int Amount_Lost = (int) test.get(4);
+      int Total_Bet = (int) test.get(5);
+
+      Games_Played++;
+      Games_Won = Games_Won + Won;
+      Amount_Won = Amount_Won + (int) amount_won;
+      Amount_Lost = Amount_Lost + amount_lost;
+      Total_Bet = Total_Bet + (int) this.bet;
+
+      SiriusGambling.siriusGambling.getSQLManager().UpdateData(player.getUniqueId().toString(),player.getName(),Games_Played,Games_Won,Amount_Won,Amount_Lost,Total_Bet);
+
+    }
+    else {
+
+      SiriusGambling.siriusGambling.getSQLManager().InsertFirstTime(player.getUniqueId().toString(), player.getName(), Won, (int) amount_won , amount_lost, (int) this.bet);
+    }
+  }
+
 }
- }
 

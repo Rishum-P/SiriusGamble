@@ -3,3 +3,4 @@
 /.project
 /.settings/
 /.idea/
+src/main/java/sirius/gambling/util/SQLManager.java
