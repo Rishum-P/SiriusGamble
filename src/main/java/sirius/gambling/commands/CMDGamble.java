@@ -10,6 +10,8 @@ import sirius.gambling.SiriusGambling;
 import sirius.gambling.Slots;
 import sirius.gambling.Cooldown;
 
+import java.util.List;
+
 
 public class CMDGamble implements CommandExecutor {
 
@@ -21,6 +23,9 @@ public class CMDGamble implements CommandExecutor {
                 return help(sender);
             }
 
+            if (args[0].equalsIgnoreCase("stats")) {
+                return printstats(sender);
+            }
 
             if (Cooldown.isInCooldown(player.getUniqueId(),"Gamble")){
                 int TimeLeft = Cooldown.getTimeLeft(player.getUniqueId(),"Gamble");
@@ -86,6 +91,38 @@ public class CMDGamble implements CommandExecutor {
         sender.sendMessage(ChatColor.GOLD + " Maximum Bet is: " + ChatColor.GREEN + "$20,000");
         sender.sendMessage(ChatColor.GOLD + " Usage Cooldown: " + ChatColor.GREEN + "10 Minutes");
         sender.sendMessage(ChatColor.YELLOW + "--------------------------------------------");
+        return true;
+    }
+
+    public boolean printstats(CommandSender sender){
+
+        Player player = (Player) sender;
+
+        if (!SiriusGambling.siriusGambling.getSQLManager().PlayerExists(player.getUniqueId().toString())) {
+            sender.sendMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + "You have yet to gamble!");
+            return true;
+        }
+
+        List<Number> data = SiriusGambling.siriusGambling.getSQLManager().GetData(player.getUniqueId().toString());
+        int Games_Played = (int) data.get(1);
+        int Games_Won = (int) data.get(2);
+        int Amount_Won = (int) data.get(3);
+        int Amount_Lost = (int) data.get(4);
+        int Total_Bet = (int) data.get(5);
+
+        double WinPercent = Math.round((((double)Games_Won / (double)Games_Played) * 100d));
+
+        sender.sendMessage(ChatColor.YELLOW + "---------------[" + ChatColor.LIGHT_PURPLE + "SiriusGamble Stats" + ChatColor.YELLOW + "]---------------");
+        sender.sendMessage(ChatColor.GOLD + " Games Played: " + ChatColor.GREEN + Games_Played);
+        sender.sendMessage(ChatColor.GOLD + " Games Won: " + ChatColor.GREEN + Games_Won);
+        sender.sendMessage(ChatColor.GOLD + " Games Lost: " + ChatColor.GREEN + (Games_Played - Games_Won));
+        sender.sendMessage(ChatColor.GOLD + " Win Percentage: " + ChatColor.GREEN + WinPercent + "%");
+        sender.sendMessage(ChatColor.GOLD + " Amount Won: " + ChatColor.GREEN + "$" + Amount_Won);
+        sender.sendMessage(ChatColor.GOLD + " Amount Lost: " + ChatColor.GREEN + "$" + Amount_Lost);
+        sender.sendMessage(ChatColor.GOLD + " Total Spent: " + ChatColor.GREEN + "$" + Total_Bet);
+        sender.sendMessage(ChatColor.GOLD + " Profit/Loss: " + ChatColor.GREEN + "$" + (Amount_Won - Amount_Lost));
+        sender.sendMessage(ChatColor.YELLOW + "-----------------------------------------------");
+
         return true;
     }
 }

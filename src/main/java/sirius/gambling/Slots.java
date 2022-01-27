@@ -158,12 +158,12 @@ public class Slots
 
     if (SiriusGambling.siriusGambling.getSQLManager().PlayerExists(player.getUniqueId().toString())) {
 
-      List<Number> test = SiriusGambling.siriusGambling.getSQLManager().GetData(player.getUniqueId().toString());
-      int Games_Played = (int) test.get(1);
-      int Games_Won = (int) test.get(2);
-      int Amount_Won = (int) test.get(3);
-      int Amount_Lost = (int) test.get(4);
-      int Total_Bet = (int) test.get(5);
+      List<Number> Data = SiriusGambling.siriusGambling.getSQLManager().GetData(player.getUniqueId().toString());
+      int Games_Played = (int) Data.get(1);
+      int Games_Won = (int) Data.get(2);
+      int Amount_Won = (int) Data.get(3);
+      int Amount_Lost = (int) Data.get(4);
+      int Total_Bet = (int) Data.get(5);
 
       Games_Played++;
       Games_Won = Games_Won + Has_Won;
