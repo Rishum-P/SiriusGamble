@@ -145,17 +145,14 @@ public class Slots
   }
 
 
-  public void updateStats(double amount_won) {
+  public void updateStats(double Won_This_Bet) {
 
-    int Won = 0;
-    int amount_lost = 0;
+    int Has_Won = 1;
+    int Lost_This_Bet = 0;
 
-    if (amount_won != 0.0D) {
-      Won = 1;
-    }
-
-    if (amount_won == 0.0D) {
-      amount_lost = (int) this.bet;
+    if (Won_This_Bet == 0.0D) {
+      Has_Won = 0;
+      Lost_This_Bet = (int) this.bet;
     }
 
 
@@ -169,17 +166,16 @@ public class Slots
       int Total_Bet = (int) test.get(5);
 
       Games_Played++;
-      Games_Won = Games_Won + Won;
-      Amount_Won = Amount_Won + (int) amount_won;
-      Amount_Lost = Amount_Lost + amount_lost;
+      Games_Won = Games_Won + Has_Won;
+      Amount_Won = Amount_Won + (int) Won_This_Bet;
+      Amount_Lost = Amount_Lost + Lost_This_Bet;
       Total_Bet = Total_Bet + (int) this.bet;
 
       SiriusGambling.siriusGambling.getSQLManager().UpdateData(player.getUniqueId().toString(),player.getName(),Games_Played,Games_Won,Amount_Won,Amount_Lost,Total_Bet);
 
     }
     else {
-
-      SiriusGambling.siriusGambling.getSQLManager().InsertFirstTime(player.getUniqueId().toString(), player.getName(), Won, (int) amount_won , amount_lost, (int) this.bet);
+      SiriusGambling.siriusGambling.getSQLManager().InsertFirstTime(player.getUniqueId().toString(), player.getName(), Has_Won, (int) Won_This_Bet , Lost_This_Bet, (int) this.bet);
     }
   }
 
