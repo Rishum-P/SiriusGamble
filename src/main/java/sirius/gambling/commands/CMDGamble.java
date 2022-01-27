@@ -49,16 +49,16 @@ public class CMDGamble implements CommandExecutor {
                     } catch (Exception e) {
                         return help(sender);
                     }
-                    if (SiriusGambling.econ.has((OfflinePlayer) player, bet)) {
-                        if (bet > 20000.0D) {
-                            player.sendMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + "Maximum bet is $20,000!");
+                    if (SiriusGambling.econ.has(player, bet)) {
+                        if (bet > 10000.0D) {
+                            player.sendMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + "Maximum bet is $10,000!");
                             return true;
                         }
                         if (bet < 50.0D) {
                             player.sendMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + "Minimum bet is $50!");
                             return true;
                         }
-                        Cooldown cd = new Cooldown(player.getUniqueId(), "Gamble", 5);
+                        Cooldown cd = new Cooldown(player.getUniqueId(), "Gamble", 300);
                         cd.start();
                         SiriusGambling.econ.withdrawPlayer(player, bet);
                         Slots slot = new Slots(player, bet);
