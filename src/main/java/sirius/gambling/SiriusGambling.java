@@ -9,6 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import sirius.gambling.commands.CommandRegisterer;
 import sirius.gambling.events.EventRegisterer;
 import sirius.gambling.events.InventoryEventHandler;
+import sirius.gambling.util.Config;
+import sirius.gambling.util.SQLManager;
 
 public class SiriusGambling extends JavaPlugin {
     public SiriusGambling instance = this;
@@ -16,16 +18,34 @@ public class SiriusGambling extends JavaPlugin {
     public static Permission perms = null;
     public static boolean vaultPresent = false;
     public static Plugin plugin;
+    public static SiriusGambling siriusGambling;
+    private SQLManager sql;
+
 
 
     Logger log;
 
     public void onEnable() {
         plugin = this;
+        siriusGambling = this;
 
         this.log = getLogger();
 
         log.info("SiriusGambling is starting...");
+
+        Config.setup();
+        Config.get().addDefault("sql.hostname","localhost");
+        Config.get().addDefault("sql.port",3306);
+        Config.get().addDefault("sql.username","root");
+        Config.get().addDefault("sql.password","changeme");
+        Config.get().addDefault("sql.database","Database-1");
+        Config.get().options().copyDefaults(true);
+        Config.save();
+
+        log.info("[SiriusUtils] Connecting To Database...");
+        initDatabase();
+
+
         CommandRegisterer.registerCommands(this);
         EventRegisterer.RegisterEvents();
 
@@ -49,6 +69,7 @@ public class SiriusGambling extends JavaPlugin {
     }
 
     public void onDisable() {
+        sql.onDisable();
         log.info("SiriusGambling is stopping");
     }
 
@@ -74,4 +95,13 @@ public class SiriusGambling extends JavaPlugin {
         return vaultPresent;
     }
 
+    private void initDatabase() {
+        sql = new SQLManager(this);
+    }
+
+    public SQLManager getSQLManager() {
+        return sql;
+    }
+
 }
+
