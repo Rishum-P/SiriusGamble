@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-
+@Deprecated
 public class Slots
 {
     Player player;
@@ -73,7 +73,6 @@ public class Slots
     public void roll() {
       for (int i = 0; i < 3; i++) {
         int rnum = ThreadLocalRandom.current().nextInt(0, 6);
-        System.out.println(rnum);
         switch (rnum) {
           case 0:
             inv.setItem(i + 3, this.purple);
