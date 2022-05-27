@@ -27,7 +27,7 @@ public class CMDGamble implements CommandExecutor {
                 return printstats(sender);
             }
 
-            if (Cooldown.isInCooldown(player.getUniqueId(),"Gamble")){
+            if (Cooldown.isInCooldown(player.getUniqueId(),"Gamble") && !player.hasPermission("gamble.skipcooldown")){
                 int TimeLeft = Cooldown.getTimeLeft(player.getUniqueId(),"Gamble");
 
                 if (TimeLeft <= 60) {
@@ -60,7 +60,6 @@ public class CMDGamble implements CommandExecutor {
                         }
                         Cooldown cd = new Cooldown(player.getUniqueId(), "Gamble", 300);
                         cd.start();
-                        SiriusGambling.econ.withdrawPlayer(player, bet);
                         Slots slot = new Slots(player, bet);
                         slot.createInv();
                     } else {
@@ -88,7 +87,7 @@ public class CMDGamble implements CommandExecutor {
         sender.sendMessage(ChatColor.GREEN + " Match 2 Colors = Win 2x Bet");
         sender.sendMessage(ChatColor.GREEN + " Match No Colors = No Winnings");
         sender.sendMessage(ChatColor.GOLD + " Minimum Bet is: " + ChatColor.GREEN + "$50");
-        sender.sendMessage(ChatColor.GOLD + " Maximum Bet is: " + ChatColor.GREEN + "$20,000");
+        sender.sendMessage(ChatColor.GOLD + " Maximum Bet is: " + ChatColor.GREEN + "$10,000");
         sender.sendMessage(ChatColor.GOLD + " Usage Cooldown: " + ChatColor.GREEN + "10 Minutes");
         sender.sendMessage(ChatColor.YELLOW + "--------------------------------------------");
         return true;

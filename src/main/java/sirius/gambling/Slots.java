@@ -1,16 +1,15 @@
 package sirius.gambling;
 
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 
@@ -34,9 +33,6 @@ public class Slots
     ItemStack gray = new ItemStack(160);
 
     ItemStack empty = new ItemStack(Material.THIN_GLASS);
-
-
-    Random random = new Random(System.currentTimeMillis());
 
     public Slots(Player player, double bet) {
       this.player = player;
@@ -76,7 +72,8 @@ public class Slots
 
     public void roll() {
       for (int i = 0; i < 3; i++) {
-        int rnum = this.random.nextInt(6);
+        int rnum = ThreadLocalRandom.current().nextInt(0, 6);
+        System.out.println(rnum);
         switch (rnum) {
           case 0:
             inv.setItem(i + 3, this.purple);
@@ -114,7 +111,7 @@ public class Slots
         i2.setItemMeta(iM);
         i3.setItemMeta(iM);
         this.player.sendMessage(ChatColor.GREEN + "You won! " + (this.bet * 3.0D) + " added to your balance!");
-        SiriusGambling.econ.depositPlayer((OfflinePlayer)this.player, this.bet * 3.0D);
+        SiriusGambling.econ.depositPlayer(this.player, this.bet * 2.0D);
         Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + this.player.getPlayerListName() + " just bet " + this.bet + " and won " + (this.bet * 3.0D) + "!");
         updateStats(this.bet * 3.0D);
       } else if (ni1 == ni2 || ni2 == ni3 || ni1 == ni3) {
@@ -123,8 +120,8 @@ public class Slots
         i1.setItemMeta(iM);
         i2.setItemMeta(iM);
         i3.setItemMeta(iM);
-        this.player.sendMessage(ChatColor.GREEN + "You won! " + (this.bet * 2.0D) + " added to your balance!");
-        SiriusGambling.econ.depositPlayer((OfflinePlayer)this.player, this.bet * 2.0D);
+        this.player.sendMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + "You won! " + (this.bet * 2.0D) + " added to your balance!");
+        SiriusGambling.econ.depositPlayer(this.player, this.bet);
         Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + this.player.getPlayerListName() + " just bet " + this.bet + " and won " + (this.bet * 2.0D) + "!");
         updateStats(this.bet * 2.0D);
       } else {
@@ -133,6 +130,8 @@ public class Slots
         i1.setItemMeta(iM);
         i2.setItemMeta(iM);
         i3.setItemMeta(iM);
+        this.player.sendMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.RED + "You Lost! " + this.bet + " removed from your balance!");
+        SiriusGambling.econ.withdrawPlayer(player, bet);
         Bukkit.broadcastMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.RED + this.player.getPlayerListName() + " just bet " + this.bet + " and lost it all!");
         updateStats(0.0D);
      }
