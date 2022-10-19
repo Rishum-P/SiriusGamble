@@ -54,8 +54,8 @@ public class CMDGamble implements CommandExecutor {
                             player.sendMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + "Maximum bet is $10,000!");
                             return true;
                         }
-                        if (bet < 50.0D) {
-                            player.sendMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + "Minimum bet is $50!");
+                        if (bet < 1D) {
+                            player.sendMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + "Minimum bet is $1!");
                             return true;
                         }
                         Cooldown cd = new Cooldown(player.getUniqueId(), "Gamble", 300);
