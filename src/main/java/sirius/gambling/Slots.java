@@ -12,11 +12,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-@Deprecated
 public class Slots
 {
     Player player;
-    double bet = 0.0D;
+    double bet;
 
     public static Inventory inv;
 

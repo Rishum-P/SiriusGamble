@@ -1,7 +1,6 @@
 package sirius.gambling.commands;
 
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,6 +8,7 @@ import org.bukkit.entity.Player;
 import sirius.gambling.SiriusGambling;
 import sirius.gambling.Slots;
 import sirius.gambling.Cooldown;
+import sirius.gambling.util.Utils;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class CMDGamble implements CommandExecutor {
             }
 
             if (args[0].equalsIgnoreCase("stats")) {
-                return printstats(sender);
+                return printStats(sender);
             }
 
             if (Cooldown.isInCooldown(player.getUniqueId(),"Gamble") && !player.hasPermission("gamble.skipcooldown")){
@@ -43,12 +43,13 @@ public class CMDGamble implements CommandExecutor {
             } else {
 
                 if (args.length == 1) {
-                    double bet = 0.0D;
+                    double bet;
                     try {
-                        bet = Double.parseDouble(args[0]);
+                        bet = Utils.doubleRoundTo2Decimals(Double.parseDouble(args[0]));
                     } catch (Exception e) {
                         return help(sender);
                     }
+
                     if (SiriusGambling.econ.has(player, bet)) {
                         if (bet > 10000.0D) {
                             player.sendMessage(ChatColor.YELLOW + "[" + ChatColor.LIGHT_PURPLE + "SiriusGamble" + ChatColor.YELLOW + "] " + ChatColor.GREEN + "Maximum bet is $10,000!");
@@ -93,7 +94,7 @@ public class CMDGamble implements CommandExecutor {
         return true;
     }
 
-    public boolean printstats(CommandSender sender){
+    public boolean printStats(CommandSender sender){
 
         Player player = (Player) sender;
 
