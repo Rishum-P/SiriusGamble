@@ -18,20 +18,19 @@ public class Slots
     double bet;
 
     public static Inventory inv;
+    ItemStack purple = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
 
-    ItemStack purple = new ItemStack(160);
+    ItemStack blue = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
 
-    ItemStack blue = new ItemStack(160);
+    ItemStack yellow = new ItemStack(Material.YELLOW_STAINED_GLASS_PANE);
 
-    ItemStack yellow = new ItemStack(160);
+    ItemStack green = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
 
-    ItemStack green = new ItemStack(160);
+    ItemStack pink = new ItemStack(Material.PINK_STAINED_GLASS_PANE);
 
-    ItemStack pink = new ItemStack(160);
+    ItemStack gray = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
 
-    ItemStack gray = new ItemStack(160);
-
-    ItemStack empty = new ItemStack(Material.THIN_GLASS);
+    ItemStack empty = new ItemStack(Material.GLASS_PANE);
 
     public Slots(Player player, double bet) {
       this.player = player;

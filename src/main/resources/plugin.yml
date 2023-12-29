@@ -1,6 +1,7 @@
 name: SiriusGambling
 main: sirius.gambling.SiriusGambling
 version: 1.0
+api-version: 1.13
 depend: [Vault]
 authors: [Emuq, Rishum]
 commands:
